@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import Pins from './Pins';
 import Feed from '../components/Feed';
 import Navbar from '../components/Navbar';
 
@@ -8,7 +7,6 @@ function Home() {
   const [sortTerm, setSortTerm] = useState('name');
 
   return (
-    // <div className="overflow-hidden">
     <div className="flex flex-col h-screen overflow-auto">
       <Navbar
         searchTerm={searchTerm}
@@ -17,7 +15,6 @@ function Home() {
         setSortTerm={setSortTerm}
       />
       <Feed sortTerm={sortTerm} searchTerm={searchTerm} />
-      {/* <Pins searchTerm={searchTerm} sortTerm={sortTerm} /> */}
     </div>
   );
 }

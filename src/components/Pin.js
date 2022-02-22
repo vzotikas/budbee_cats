@@ -2,13 +2,12 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiTrash } from 'react-icons/fi';
 import { FiEdit3 } from 'react-icons/fi';
-
 import { client, urlFor } from '../client';
-import EditPinModal from './EditPinModal';
+import ModalWindow from './ModalWindow';
 
 function Pin({ pin }) {
   const [postHovered, setPostHovered] = useState(false);
-
+  const [modalIsOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
   const deletePin = async (id) => {
@@ -16,8 +15,6 @@ function Pin({ pin }) {
       navigate(`/`);
     });
   };
-
-  const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
     setIsOpen(true);
@@ -28,7 +25,6 @@ function Pin({ pin }) {
       <div className="items-start justify-center">
         <div className="relative group">
           <div className="absolute -inset-0.5 bg-mainColor rounded-lg blur opacity-10 group-hover:opacity-30 transition duration-500 group-hover:duration-500 animate-tilt"></div>
-          {/* <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-50 transition duration-500 group-hover:duration-500 animate-tilt"></div> */}
           <div
             onMouseEnter={() => setPostHovered(true)}
             onMouseLeave={() => setPostHovered(false)}
@@ -39,21 +35,11 @@ function Pin({ pin }) {
               alt="cat-pin"
               src={urlFor(pin.image).width(250).url()}
             />
-
             {postHovered && (
               <div
                 className="flex flex-row justify-between"
                 style={{ height: '100%' }}
               >
-                {/* <a
-                  onClick={(e) => e.stopPropagation()}
-                  href={`${image?.asset?.url}?dl=`}
-                  download
-                  className="absolute top-2 left-2"
-                >
-                  <MdDownloadForOffline className="bg-green w-8 h-8 opacity-70 hover:opacity-100 text-white font-bold px-1 py-1 text-base rounded-3xl hover:shadow-md outline-none" />
-                </a> */}
-
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
@@ -67,7 +53,6 @@ function Pin({ pin }) {
                   className="absolute top-4 right-4"
                   type="button"
                   onClick={(e) => {
-                    // e.stopPropagation();
                     openModal();
                   }}
                 >
@@ -94,7 +79,12 @@ function Pin({ pin }) {
           </div>
         </div>
       </div>
-      <EditPinModal modalIsOpen={modalIsOpen} setIsOpen={setIsOpen} pin={pin} />
+      <ModalWindow
+        modalIsOpen={modalIsOpen}
+        setIsOpen={setIsOpen}
+        pin={pin}
+        usage="edit"
+      />
     </div>
   );
 }

@@ -1,8 +1,9 @@
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import Modal from 'react-modal';
 import EditPin from './EditPin';
+import CreatePin from './CreatePin';
 
-function EditPinModal({ modalIsOpen, setIsOpen, pin }) {
+function ModalWindow({ modalIsOpen, setIsOpen, pin, usage }) {
   function closeModal() {
     setIsOpen(false);
   }
@@ -30,6 +31,7 @@ function EditPinModal({ modalIsOpen, setIsOpen, pin }) {
       justifyContent: 'center',
     },
   };
+
   return (
     <Modal
       style={customStyles}
@@ -45,10 +47,13 @@ function EditPinModal({ modalIsOpen, setIsOpen, pin }) {
       >
         <IoMdCloseCircleOutline className="text-white align-middle rounded-full hover:text-black transition-all duration-500 ease-in-out" />
       </button>
-
-      <EditPin closeModal={closeModal} pin={pin} />
+      {usage === 'edit' ? (
+        <EditPin closeModal={closeModal} pin={pin} />
+      ) : (
+        <CreatePin closeModal={closeModal} pin={pin} />
+      )}
     </Modal>
   );
 }
 
-export default EditPinModal;
+export default ModalWindow;

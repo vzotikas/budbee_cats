@@ -14,13 +14,10 @@ function CreatePin({ closeModal }) {
   const [breed, setBreed] = useState('');
   const [fields, setFields] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [file, setFile] = useState(null);
   const fileTypes = ['JPEG', 'JPG', 'PNG', 'GIF'];
   const navigate = useNavigate();
 
   const handleChange = (file) => {
-    // setFile(file);
-    console.log(file[0].type);
     const { type, name } = file[0];
     setLoading(true);
     client.assets
@@ -37,7 +34,7 @@ function CreatePin({ closeModal }) {
       });
   };
 
-  const savePin = () => {
+  const savePin = async () => {
     if (name && breed && details && date && image?._id) {
       const doc = {
         _type: 'pin',
@@ -53,13 +50,12 @@ function CreatePin({ closeModal }) {
           },
         },
       };
-      client.create(doc).then(() => {
+      await client.create(doc).then(() => {
         closeModal();
         navigate('/');
       });
     } else {
       setFields(true);
-
       setTimeout(() => {
         setFields(false);
       }, 2000);
@@ -102,7 +98,6 @@ function CreatePin({ closeModal }) {
           </div>
         )}
       </div>
-
       <div className="flex flex-col mt-5 text-white bg-mainColor w-full ">
         <input
           type="text"

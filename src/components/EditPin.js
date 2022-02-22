@@ -14,13 +14,10 @@ function EditPin({ closeModal, pin }) {
   const [breed, setBreed] = useState(pin.breed);
   const [fields, setFields] = useState(false);
   const [loading, setLoading] = useState(false);
-  // const [file, setFile] = useState(null);
   const fileTypes = ['JPEG', 'JPG', 'PNG', 'GIF'];
   const navigate = useNavigate();
 
   const handleChange = (file) => {
-    // setFile(file);
-    console.log(file[0].type);
     const { type, name } = file[0];
     setLoading(true);
     client.assets
@@ -60,7 +57,6 @@ function EditPin({ closeModal, pin }) {
       });
     } else {
       setFields(true);
-
       setTimeout(() => {
         setFields(false);
       }, 2000);

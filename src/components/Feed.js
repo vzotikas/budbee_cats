@@ -9,7 +9,6 @@ function Feed({ sortTerm, searchTerm }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     if (searchTerm) {
       setLoading(true);
       const query = searchQuery(searchTerm.toLowerCase());
@@ -18,19 +17,18 @@ function Feed({ sortTerm, searchTerm }) {
         setLoading(false);
       });
     } else {
+      setLoading(true);
       client.fetch(feedQuery).then((data) => {
         setPins(data?.sort((a, b) => (a[sortTerm] > b[sortTerm] ? 1 : -1)));
         setLoading(false);
-        console.log(sortTerm);
       });
     }
   }, [searchTerm, sortTerm]);
 
   return (
     <div>
-      {loading ?? <Spinner message="Loading cats..." />}
+      {loading && <Spinner message="Loading cats..." />}
       {pins && <MasonryLayout pins={pins} />}
-
       {pins?.length === 0 && (
         <div className="mt-10 text-center text-xl">No cats available!</div>
       )}

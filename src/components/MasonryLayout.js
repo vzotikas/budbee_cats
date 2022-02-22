@@ -10,8 +10,6 @@ const breakpointObj = {
   500: 1,
 };
 
-console.log();
-
 function MasonryLayout({ pins }) {
   return (
     <Masonry className="flex" breakpointCols={breakpointObj}>

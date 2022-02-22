@@ -28,7 +28,6 @@ function Search({ searchTerm }) {
     <div>
       {loading ?? <Spinner message="Searching for cats..." />}
       {pins && <MasonryLayout pins={pins} />}
-
       {pins?.length === 0 && searchTerm !== '' && (
         <div className="mt-10 text-center text-xl">No cats found!</div>
       )}
