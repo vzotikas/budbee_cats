@@ -1,12 +1,7 @@
-import { useEffect, useState } from 'react';
-import { feedQuery, searchQuery } from '../utils/data';
 import MasonryLayout from '../components/MasonryLayout';
 import Spinner from '../components/Spinner';
-import { client } from '../client';
 
-function Pins({ pinsUpdated, setPinsUpdated, pins, setLoading, loading }) {
-  // const [pins, setPins] = useState(null);
-
+function Pins({ pinsUpdated, setPinsUpdated, pins, loading }) {
   return (
     <div>
       {loading ? (

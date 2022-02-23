@@ -1,20 +1,16 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FiTrash } from 'react-icons/fi';
 import { FiEdit3 } from 'react-icons/fi';
 import { client, urlFor } from '../client';
 import ModalWindow from './ModalWindow';
-import { feedQuery, searchQuery } from '../utils/data';
 
 function Pin({ pin, setPinsUpdated }) {
   const [postHovered, setPostHovered] = useState(false);
   const [modalIsOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
   const deletePin = async (id) => {
     await client.delete(id).then(() => {
       setPinsUpdated(true);
-      // navigate(`/`);
     });
   };
 

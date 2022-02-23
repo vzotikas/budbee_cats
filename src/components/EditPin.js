@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { FiTrash } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
 import { client } from '../client';
 import Spinner from './Spinner';
 import { FileUploader } from 'react-drag-drop-files';
-import { feedQuery, searchQuery } from '../utils/data';
 
-function EditPin({ closeModal, pin, pinsUpdated, setPinsUpdated }) {
+function EditPin({ closeModal, pin, setPinsUpdated }) {
   const [name, setName] = useState(pin.name);
   const [date, setDate] = useState(pin.date);
   const [image, setImage] = useState(pin.image.asset);
@@ -16,7 +14,6 @@ function EditPin({ closeModal, pin, pinsUpdated, setPinsUpdated }) {
   const [fields, setFields] = useState(false);
   const [loading, setLoading] = useState(false);
   const fileTypes = ['JPEG', 'JPG', 'PNG', 'GIF'];
-  const navigate = useNavigate();
 
   const handleChange = (file) => {
     const { type, name } = file[0];
@@ -55,7 +52,6 @@ function EditPin({ closeModal, pin, pinsUpdated, setPinsUpdated }) {
         client.delete(id);
         setPinsUpdated(true);
         closeModal();
-        // navigate('/');
       });
     } else {
       setFields(true);
