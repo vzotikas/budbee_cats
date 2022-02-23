@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { IoMdAdd, IoMdSearch } from 'react-icons/io';
 import logo from '../images/logo.png';
 import Modal from 'react-modal';
-import ModalWindow from './ModalWindow';
+import ModalWindow from '../components/ModalWindow';
 
 Modal.setAppElement('#root');
 
-function Navbar({ searchTerm, setSearchTerm, sortTerm, setSortTerm }) {
+function Navbar({ searchTerm, setSearchTerm, setSortTerm }) {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -23,7 +23,8 @@ function Navbar({ searchTerm, setSearchTerm, sortTerm, setSortTerm }) {
               src={logo}
               alt="logo"
               className="flex items-center w-40 m-2 "
-              onClick={() => setSearchTerm('')}
+              onClick={() => window.location.reload(false)}
+              // onClick={(() => setSearchTerm(''), window.location.reload(false))}
             />
           </Link>
         </div>
@@ -39,6 +40,7 @@ function Navbar({ searchTerm, setSearchTerm, sortTerm, setSortTerm }) {
               className="p-1 items-center rounded-md text-green  "
               onChange={(e) => setSortTerm(e.target.value)}
             >
+              <option value="">None</option>
               <option value="name">Name</option>
               <option value="breed">Breed</option>
             </select>

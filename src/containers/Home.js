@@ -1,21 +1,34 @@
-import { useState } from 'react';
-import Feed from '../components/Feed';
-import Navbar from '../components/Navbar';
+import { useEffect, useState } from 'react';
+import Pins from './Pins';
+import Navbar from './Navbar';
 
 function Home() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortTerm, setSortTerm] = useState('name');
-
+  const [sortTerm, setSortTerm] = useState('');
+  const [pin, setPin] = useState(null);
+  const [pins, setPins] = useState(null);
+  document.cookie = 'SameSite';
   return (
-    <div className="flex flex-col h-screen overflow-auto">
+    <>
       <Navbar
+        className="sticky top-0 "
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         sortTerm={sortTerm}
         setSortTerm={setSortTerm}
+        pin={pin}
+        setPin={setPin}
       />
-      <Feed sortTerm={sortTerm} searchTerm={searchTerm} />
-    </div>
+      <Pins
+        className="relative"
+        sortTerm={sortTerm}
+        searchTerm={searchTerm}
+        pin={pin}
+        setPin={setPin}
+        pins={pins}
+        setPins={setPins}
+      />
+    </>
   );
 }
 

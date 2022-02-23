@@ -17,10 +17,11 @@ function CreatePin({ closeModal }) {
   const fileTypes = ['JPEG', 'JPG', 'PNG', 'GIF'];
   const navigate = useNavigate();
 
-  const handleChange = (file) => {
+  const handleChange = async (file) => {
+    console.log(file[0]);
     const { type, name } = file[0];
     setLoading(true);
-    client.assets
+    await client.assets
       .upload('image', file[0], {
         contentType: type,
         filename: name,
