@@ -12,7 +12,6 @@ function Home() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log(pinsUpdated);
     if (searchTerm) {
       setLoading(true);
       const query = searchQuery(searchTerm.toLowerCase());
@@ -29,7 +28,6 @@ function Home() {
         setLoading(false);
       });
     }
-    console.log('reloaded');
   }, [searchTerm, sortTerm, pinsUpdated]);
 
   return (

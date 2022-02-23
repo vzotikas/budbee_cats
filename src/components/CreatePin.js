@@ -16,7 +16,6 @@ function CreatePin({ closeModal, setPinsUpdated }) {
   const fileTypes = ['JPEG', 'JPG', 'PNG', 'GIF'];
 
   const handleChange = async (file) => {
-    console.log(file[0]);
     const { type, name } = file[0];
     setLoading(true);
     await client.assets
@@ -36,7 +35,7 @@ function CreatePin({ closeModal, setPinsUpdated }) {
   const savePin = () => {
     if (name && breed && details && date && image?._id) {
       const doc = {
-        _type: 'pin',
+        _type: 'pins',
         name,
         breed,
         details,

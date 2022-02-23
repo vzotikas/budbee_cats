@@ -82,6 +82,7 @@ function Pin({ pin, setPinsUpdated }) {
         setIsOpen={setIsOpen}
         pin={pin}
         usage="edit"
+        setPinsUpdated={setPinsUpdated}
       />
     </div>
   );

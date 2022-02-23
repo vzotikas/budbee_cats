@@ -9,6 +9,10 @@ export const client = sanityClient({
   token: process.env.REACT_APP_SANITY_TOKEN,
 });
 
+// client.delete({
+//   query: `*[_type == "pins"]`,
+// });
+
 const builder = imageUrlBuilder(client);
 
 export const urlFor = (source) => builder.image(source);

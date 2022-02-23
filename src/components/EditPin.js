@@ -15,10 +15,10 @@ function EditPin({ closeModal, pin, setPinsUpdated }) {
   const [loading, setLoading] = useState(false);
   const fileTypes = ['JPEG', 'JPG', 'PNG', 'GIF'];
 
-  const handleChange = (file) => {
+  const handleChange = async (file) => {
     const { type, name } = file[0];
     setLoading(true);
-    client.assets
+    await client.assets
       .upload('image', file[0], {
         contentType: type,
         filename: name,
@@ -32,27 +32,37 @@ function EditPin({ closeModal, pin, setPinsUpdated }) {
       });
   };
 
-  const savePin = async (id) => {
-    if (name && breed && details && date && image?._id) {
-      const doc = {
-        _type: 'pin',
-        name,
-        breed,
-        details,
-        date,
-        image: {
-          _type: 'image',
-          asset: {
-            _type: 'reference',
-            _ref: image?._id,
+  const savePin = () => {
+    if (name && breed && details && date) {
+      if (image?._id) {
+        const doc = {
+          _type: 'pins',
+          _id: pin?._id,
+          name,
+          breed,
+          details,
+          date,
+          image: {
+            _type: 'image',
+            asset: {
+              _type: 'reference',
+              _ref: image?._id,
+            },
           },
-        },
-      };
-      await client.create(doc).then(() => {
-        client.delete(id);
-        setPinsUpdated(true);
-        closeModal();
-      });
+        };
+        client.createOrReplace(doc).then(() => {
+          setPinsUpdated(true);
+          closeModal();
+        });
+      } else {
+        client
+          .patch(pin?._id)
+          .set({ name: name, breed: breed, date: date, details, details })
+          .commit()
+          .then(() => {
+            setPinsUpdated(true);
+          });
+      }
     } else {
       setFields(true);
       setTimeout(() => {
@@ -65,7 +75,18 @@ function EditPin({ closeModal, pin, setPinsUpdated }) {
     <div className="flex flex-col rounded-3xl bg-mainColor justify-center items-center w-full">
       <div className="flex flex-col mt-2 justify-center items-center bg-mainColor border-2 border-dotted border-gray-300 w-3/4 h-40">
         {loading && <Spinner />}
-        {!image ? (
+        {image ? (
+          <div className="relative h-full">
+            <img src={image?.url} alt="catphoto" className="h-full w-full" />
+            <button
+              type="button"
+              className=" absolute bottom-2 right-2 p-1 rounded-full text-white bg-red-500 text-xl cursor-pointer outline-none hover:bg-white hover:text-black transition-all duration-500 ease-in-out"
+              onClick={() => setImage(null)}
+            >
+              <FiTrash className="w-4 h-4 flex items-center" />
+            </button>
+          </div>
+        ) : (
           <FileUploader
             multiple={true}
             handleChange={handleChange}
@@ -84,20 +105,8 @@ function EditPin({ closeModal, pin, setPinsUpdated }) {
               </div>
             }
           />
-        ) : (
-          <div className="relative h-full">
-            <img src={image?.url} alt="catphoto" className="h-full w-full" />
-            <button
-              type="button"
-              className=" absolute bottom-2 right-2 p-1 rounded-full text-white bg-red-500 text-xl cursor-pointer outline-none hover:bg-white hover:text-black transition-all duration-500 ease-in-out"
-              onClick={() => setImage(null)}
-            >
-              <FiTrash className="w-4 h-4 flex items-center" />
-            </button>
-          </div>
         )}
       </div>
-
       <div className="flex flex-col mt-5 text-white bg-mainColor w-full ">
         <input
           type="text"
@@ -140,8 +149,8 @@ function EditPin({ closeModal, pin, setPinsUpdated }) {
           <button
             type="button"
             onClick={(e) => {
-              e.stopPropagation();
-              savePin(pin._id);
+              // e.stopPropagation();
+              savePin();
             }}
             className="bg-red-500 text-white cursor-pointer font-bold p-2 rounded-full w-28 outline-none hover:bg-white hover:text-black transition-all duration-500 ease-in-out"
           >
