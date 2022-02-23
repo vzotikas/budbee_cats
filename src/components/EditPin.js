@@ -57,7 +57,7 @@ function EditPin({ closeModal, pin, setPinsUpdated }) {
       } else {
         client
           .patch(pin?._id)
-          .set({ name: name, breed: breed, date: date, details, details })
+          .set({ name: name, breed: breed, date: date, details: details })
           .commit()
           .then(() => {
             setPinsUpdated(true);
