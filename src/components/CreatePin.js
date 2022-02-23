@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { client } from '../client';
 import Spinner from './Spinner';
 import { FileUploader } from 'react-drag-drop-files';
+import { feedQuery, searchQuery } from '../utils/data';
 
-function CreatePin({ closeModal }) {
+function CreatePin({ closeModal, pinsUpdated, setPinsUpdated }) {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [image, setImage] = useState(null);
@@ -35,7 +36,7 @@ function CreatePin({ closeModal }) {
       });
   };
 
-  const savePin = async () => {
+  const savePin = () => {
     if (name && breed && details && date && image?._id) {
       const doc = {
         _type: 'pin',
@@ -51,9 +52,10 @@ function CreatePin({ closeModal }) {
           },
         },
       };
-      await client.create(doc).then(() => {
+      client.create(doc).then(() => {
+        setPinsUpdated(true);
         closeModal();
-        navigate('/');
+        // navigate('/');
       });
     } else {
       setFields(true);

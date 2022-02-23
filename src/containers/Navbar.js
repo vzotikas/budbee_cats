@@ -7,7 +7,13 @@ import ModalWindow from '../components/ModalWindow';
 
 Modal.setAppElement('#root');
 
-function Navbar({ searchTerm, setSearchTerm, setSortTerm }) {
+function Navbar({
+  searchTerm,
+  setSearchTerm,
+  setSortTerm,
+  pinsUpdated,
+  setPinsUpdated,
+}) {
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function openModal() {
@@ -68,6 +74,8 @@ function Navbar({ searchTerm, setSearchTerm, setSortTerm }) {
               modalIsOpen={modalIsOpen}
               setIsOpen={setIsOpen}
               usage="create"
+              pinsUpdated={pinsUpdated}
+              setPinsUpdated={setPinsUpdated}
             />
           </div>
         </div>

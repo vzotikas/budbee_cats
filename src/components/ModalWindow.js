@@ -3,7 +3,14 @@ import Modal from 'react-modal';
 import EditPin from './EditPin';
 import CreatePin from './CreatePin';
 
-function ModalWindow({ modalIsOpen, setIsOpen, pin, usage }) {
+function ModalWindow({
+  modalIsOpen,
+  setIsOpen,
+  pin,
+  usage,
+  pinsUpdated,
+  setPinsUpdated,
+}) {
   function closeModal() {
     setIsOpen(false);
   }
@@ -48,9 +55,19 @@ function ModalWindow({ modalIsOpen, setIsOpen, pin, usage }) {
         <IoMdCloseCircleOutline className="text-white align-middle rounded-full hover:text-black transition-all duration-500 ease-in-out" />
       </button>
       {usage === 'edit' ? (
-        <EditPin closeModal={closeModal} pin={pin} />
+        <EditPin
+          closeModal={closeModal}
+          pin={pin}
+          pinsUpdated={pinsUpdated}
+          setPinsUpdated={setPinsUpdated}
+        />
       ) : (
-        <CreatePin closeModal={closeModal} pin={pin} />
+        <CreatePin
+          closeModal={closeModal}
+          pin={pin}
+          pinsUpdated={pinsUpdated}
+          setPinsUpdated={setPinsUpdated}
+        />
       )}
     </Modal>
   );

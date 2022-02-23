@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { client } from '../client';
 import Spinner from './Spinner';
 import { FileUploader } from 'react-drag-drop-files';
+import { feedQuery, searchQuery } from '../utils/data';
 
-function EditPin({ closeModal, pin }) {
+function EditPin({ closeModal, pin, pinsUpdated, setPinsUpdated }) {
   const [name, setName] = useState(pin.name);
   const [date, setDate] = useState(pin.date);
   const [image, setImage] = useState(pin.image.asset);
@@ -51,9 +52,10 @@ function EditPin({ closeModal, pin }) {
         },
       };
       await client.create(doc).then(() => {
-        closeModal();
         client.delete(id);
-        navigate('/');
+        setPinsUpdated(true);
+        closeModal();
+        // navigate('/');
       });
     } else {
       setFields(true);
